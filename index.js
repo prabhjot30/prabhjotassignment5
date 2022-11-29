@@ -1,3 +1,5 @@
+/*https://www.youtube.com/watch?v=L72fhGm1tfE*/
+
 const port = 3000,
   express = require("express"),
   mongoose=require("mongoose")
@@ -25,7 +27,7 @@ app.get('/book1', controller.getTheBookName1, (req, res) => {
 })
 
 
-app.get('/books', controller.getAllBooks, (req, res) => {
+app.get('/booksList', controller.getAllBooks, (req, res) => {
   res.render('books', {theBooks: req.data});
 })
 
@@ -37,11 +39,7 @@ app.get('/honesty', (req, res) => {
   res.render('honesty');
 })
 
-app.get('/index', (req, res) => {
-  res.render('index');
-})
-
-app.get('/homepage', (req, res) => {
+app.get('/home', (req, res) => {
   res.render('index');
 })
 
@@ -53,15 +51,21 @@ app.get('/book3', controller.getTheBookName3, (req, res) => {
   res.render('book3', {theBooks: req.data});
 })
 
+
+
 app.get('/survey', (req, res) => {
   res.render('survey');
 })
 
+app.get('/*', (req, res) => {
+  res.send("Error/ Not Found");
+})
+
 app.get("/", (req, res) => {
-    res.send("Hello, Yo!");
+    res.render('index');
 })
   .listen(port, () => {
-    console.log(`The Express.js server has started and is listening ➥ on port number: ${3000}`);
+    console.log(`Local Host 3000`);
   
   });
  
