@@ -5,9 +5,13 @@
             <h1>
                 Books List
             </h1>
-            <a href="7habits.html"> <img src="7habits.jpg"style="width:200px;height:300px;">The 7 Habits of Highly Effective People</a><br>
-            <a href="powerofpositive.html"><img src="thepowerofpositive.jpg"style="width:200px;height:300px;">The Power of Positive Thinking</a><br>
-            <a href="searchformeaningpage.html"><img src="searchformeaning.jpg"style="width:200px;height:300px;">Man's Search for Meaning</a><br>
+            <% theBooks.forEach(element => { %>
+                <a href=<%=element.ID %> ">
+                    <img src=<%= element.bookImage %>
+                    style="width:200px;height:300px;">
+                    <%= element.name %></a><br>  <%  
+                
+            }); %> 
             </div>
     </body>
 </html>
