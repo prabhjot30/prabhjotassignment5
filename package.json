@@ -1,0 +1,16 @@
+{
+  "name": "1-simple-express.js-web-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "devStart": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.17.3",
+    "nodemon": "^2.0.20"
+  }
+}

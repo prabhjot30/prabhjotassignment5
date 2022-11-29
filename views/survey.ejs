@@ -1,0 +1,36 @@
+<html>
+    <%- include('design/navigation')%>
+    <body style="background-color:cadetblue">
+        <div class="information">
+            <h1>
+            Survey
+            </h1>
+            <form action="survey.html">
+            <b><label for="name">Name: </label></b>
+            
+            <input type="text" id="name" required/>
+            <br>
+            <b><label for="dob">Date of Birth: </label></b>
+            <input type="date" id="dob" required/>
+            <b><p>
+                How likely is it that you recommend this library to your friends?
+            </p></b>
+            
+                <input type="radio" id="veryLikely">
+                <b><label for="veryLikely">Very Likely</label></b>
+                
+                <input type="radio" id="veryLikely">
+                <b><label for="swLikely">Somewhat Likely</label></b>
+                
+                <input type="radio" id="nLikely">
+                <b><label for="nLikely">Not Likely</label></b>
+
+                <br><br>
+                <div style="position: relative;">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+
+    </body>
+</html>
