@@ -1,33 +1,80 @@
-var book = require('../Models/model');
+var Book = require('../Models/model');
 
-exports.getAllBooks = (req, res, next) => {
-    book.find({}, (error, theBooks) => {
-        if (error) next (error);
-        req.data = theBooks;
-        next();
-    })
-}
-
-exports.getTheBookName1 = (req, res, next) => {
-    book.find({ID: "book1"}, (error, theBooks) => {
-        if (error) next (error);
-        req.data = theBooks;
-        next();
-    })
-}
-
-exports.getTheBookName2 = (req, res, next) => {
-    book.find({ID: "book2"}, (error, theBooks) => {
-        if (error) next (error);
-        req.data = theBooks;
-        next();
-    })
-}
-
-exports.getTheBookName3 = (req, res, next) => {
-    book.find({ID: "book3"}, (error, theBooks) => {
-        if (error) next (error);
-        req.data = theBooks;
-        next();
-    })
-}
+module.exports = {
+    index: (req, res) => {
+      Book.find({})
+        .then(books => {
+          res.render("books", {
+            books: books
+          })
+        })
+        .catch(error => {
+          console.log(`Error fetching books: ${error.message}`)
+          res.redirect("/");
+        });
+    },
+    prabhindex: (req, res) => {
+      Book.find({})
+        .then(books => {
+          res.render("admin", {
+            books: books
+          })
+        })
+        .catch(error => {
+          console.log(`Error fetching books: ${error.message}`)
+          res.redirect("/");
+        });
+    },
+    show: (req, res, next) => {
+      let bookId = req.params.id;
+      Book.findById(bookId)
+        .then(book => {
+          res.locals.book = book;
+          next();
+        })
+        .catch(error => {
+          console.log(`Error fetching Book by ID: ${error.message}`);
+          next(error);
+        });
+    },
+    new: (req, res) => {
+      res.render("new");
+    },
+    create: (req, res, next) => {
+      let bookParams = {
+        Name: req.body.Name,
+        AuthorName: req.body.AuthorName
+      };
+      Book.create(bookParams)
+        .then(books => {
+          res.locals.redirect = "/admin";
+          res.locals.book = books;
+          next();
+        })
+        .catch(error => {
+          console.log(`Error saving user: ${error.message}`);
+          next(error);
+        });
+    },
+    redirectView: (req, res, next) => {
+      let redirectPath = res.locals.redirect;
+      if (redirectPath) res.redirect(redirectPath);
+      else next();  
+    },
+    showView: (req, res) => {
+      res.render("show");
+    },
+    delete: (req, res, next) => {
+      let bookId = req.params.id;
+      Book.findByIdAndRemove(bookId)
+        .then(() => {
+          res.locals.redirect = "/admin";
+          next();
+        })
+        .catch(error => {
+  
+          console.log(`Error deleting user by ID: ${error.message}`);
+          next();
+        });
+    }
+  };

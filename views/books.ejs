@@ -5,8 +5,8 @@
             <h1>
                 Books List
             </h1>
-            <% theBooks.forEach(element => { %>
-                <a href=<%=element.ID %> ">
+            <%books.forEach(element => { %>
+                <a href=<%= `/books/${element._id}` %> ">
                     <img src=<%= element.bookImage %>
                     style="width:200px;height:300px;">
                     <%= element.name %></a><br>  <%  

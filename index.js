@@ -1,5 +1,7 @@
 /*https://www.youtube.com/watch?v=L72fhGm1tfE*/
 
+const homecontroller = require("./controllers/homecontroller");
+
 const port = 3000,
   express = require("express"),
   mongoose=require("mongoose")
@@ -7,11 +9,16 @@ const port = 3000,
   app = express();
   modelVar= require("./Models/model")
   controller=require("./controllers/homecontroller")
+  methodOverride = require("method-override")
 
 var uri = 'mongodb+srv://prabh:prabhjot@was500-assignment5.p4popm7.mongodb.net/?retryWrites=true&w=majority'
 console.log(uri)
 mongoose.connect(uri, {useUnifiedTopology: true})
-
+app.use(
+  express.urlencoded({
+      extended: false
+  })
+);
 var db= mongoose.connection
 
 db.once("open", () => {
@@ -22,52 +29,23 @@ app.use(express.static(__dirname))
 app.set('view engine','ejs');
 app.set("port", process.env.PORT)
 
-app.get('/book1', controller.getTheBookName1, (req, res) => {
-  res.render('book1', {theBooks: req.data});
-})
-
-
-app.get('/booksList', controller.getAllBooks, (req, res) => {
-  res.render('books', {theBooks: req.data});
-})
-
-app.get('/contact', (req, res) => {
- res.render('contact');
-})
-
-app.get('/honesty', (req, res) => {
-  res.render('honesty');
-})
-
-app.get('/home', (req, res) => {
-  res.render('index');
-})
-
-app.get('/book2', controller.getTheBookName2, (req, res) => {
-  res.render('book2', {theBooks: req.data});
-})
-
-app.get('/book3', controller.getTheBookName3, (req, res) => {
-  res.render('book3', {theBooks: req.data});
-})
-
-
-
-app.get('/survey', (req, res) => {
-  res.render('survey');
-})
-
-app.get('/*', (req, res) => {
-  res.send("Error/ Not Found");
-})
-
-app.get("/", (req, res) => {
-    res.render('index');
-})
-  .listen(port, () => {
+app.get("/books",homecontroller.index)
+app.listen(port, () => {
     console.log(`Local Host 3000`);
   
-  });
+});
+app.use(
+  methodOverride("_method", {
+    methods: ["POST", "GET",]
+  })
+);
+app.get("/books", homecontroller.index);
+app.get("/admin", homecontroller.prabhindex)
+app.get("/addnewbook", homecontroller.new);
+app.post("/books/create", homecontroller.create, homecontroller.redirectView);
+app.get("/books/:id", homecontroller.show, homecontroller.showView);
+app.delete("/books/:id/delete", homecontroller.delete, homecontroller.redirectView);
+
  
 /* modelVar.create(
   {
